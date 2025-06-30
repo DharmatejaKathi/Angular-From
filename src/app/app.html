@@ -1,0 +1,62 @@
+<router-outlet />
+<div class="container">
+  <form class="form-container" [formGroup]="userFrom">
+    <img
+      src="https://res.cloudinary.com/dktfgy8q4/image/upload/c_crop,w_420,h_100/v1751278045/Innomotics-Logo-16-9-powergray-on-lime-Size-L-1920-px--removebg-preview_yh2gbg.png"
+      alt="innomotics"
+    />
+    <div class="input-container">
+      <label for="firstName">FIRST NAME <span>*</span></label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        placeholder="First Name"
+      />
+      <div
+        class="error-div"
+        *ngIf="submitted && userFrom.get('firstName')?.errors?.['required']"
+      >
+        *First Name is Required
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="lastName">LAST NAME <span>*</span></label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        placeholder="Last Name"
+      />
+      <div
+        class="error-div"
+        *ngIf="submitted && userFrom.get('lastName')?.errors?.['required']"
+      >
+        *Last Name is Required
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="mail">MAIL</label>
+      <input
+        id="mail"
+        type="text"
+        formControlName="mail"
+        placeholder="Example@mail.com"
+      />
+    </div>
+    <div class="input-container">
+      <label for="phone">PHONE NO <span>*</span></label>
+      <input id="phone" type="text" formControlName="phone" placeholder="+91" />
+      <div class="error-div" *ngIf="submitted && userFrom.get('phone')?.errors">
+        <span *ngIf="userFrom.get('phone')?.errors?.['required']"
+          >*Number Required</span
+        >
+        <span *ngIf="userFrom.get('phone')?.errors?.['min']"
+          >*Number should be 10</span
+        >
+      </div>
+    </div>
+
+    <button (click)="onSubmitButton()">Submit Data</button>
+  </form>
+</div>
