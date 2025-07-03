@@ -16,8 +16,7 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .flex-container {
