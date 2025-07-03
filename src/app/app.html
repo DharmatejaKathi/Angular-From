@@ -5,55 +5,209 @@
       src="https://res.cloudinary.com/dktfgy8q4/image/upload/c_crop,w_420,h_100/v1751278045/Innomotics-Logo-16-9-powergray-on-lime-Size-L-1920-px--removebg-preview_yh2gbg.png"
       alt="innomotics"
     />
-    <div class="input-container">
-      <label for="firstName">FIRST NAME <span>*</span></label>
-      <input
-        id="firstName"
-        type="text"
-        formControlName="firstName"
-        placeholder="First Name"
-      />
-      <div
-        class="error-div"
-        *ngIf="submitted && userFrom.get('firstName')?.errors?.['required']"
-      >
-        *First Name is Required
+    <div class="flex-container">
+      <div>
+        <div class="input-container">
+          <div class="label-input-container">
+            <label for="firstName">FIRST NAME <span>*</span></label>
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              placeholder="First Name"
+            />
+            <div
+              class="error-div"
+              *ngIf="submitted && userFrom.get('firstName')?.errors?.['required']"
+            >
+              *First Name is Required
+            </div>
+          </div>
+          <div class="label-input-container">
+            <label for="lastName">LAST NAME <span>*</span></label>
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              placeholder="Last Name"
+            />
+            <div
+              class="error-div"
+              *ngIf="submitted && userFrom.get('lastName')?.errors?.['required']"
+            >
+              *Last Name is Required
+            </div>
+          </div>
+        </div>
+        <div class="input-container">
+          <div class="label-input-container">
+            <label for="mail">EMAIL<span>*</span></label>
+            <input
+              id="mail"
+              type="text"
+              formControlName="mail"
+              placeholder="Example@mail.com"
+            />
+            <div
+              class="error-div"
+              *ngIf="submitted && userFrom.get('mail')?.errors"
+            >
+              <span *ngIf="userFrom.get('mail')?.errors?.['required']"
+                >*Mail Required</span
+              >
+              <span *ngIf="userFrom.get('mail')?.errors?.['email']"
+                >*Please enter the valid e mail address</span
+              >
+            </div>
+          </div>
+          <div class="label-input-container">
+            <label for="phone">PHONE NO <span>*</span></label>
+            <input
+              id="phone"
+              type="text"
+              formControlName="phone"
+              placeholder="+91"
+            />
+            <div
+              class="error-div"
+              *ngIf="submitted && userFrom.get('phone')?.errors"
+            >
+              <span *ngIf="userFrom.get('phone')?.errors?.['required']"
+                >*Number Required</span
+              >
+              <span *ngIf="userFrom.get('phone')?.errors?.['min']"
+                >*Number should be 10</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="label-input-container">
+            <label for="password">PASSWORD <span>*</span></label>
+            <input
+              id="password"
+              type="text"
+              formControlName="password"
+              placeholder="password"
+            />
+            <div
+              class="error-div"
+              *ngIf="submitted && userFrom.get('password')?.errors"
+            >
+              <span *ngIf="userFrom.get('password')?.errors?.['required']"
+                >*Password Required</span
+              >
+              <span *ngIf="userFrom.get('password')?.errors?.['min']"
+                >*Password should have 6 characters required.</span
+              ><span *ngIf="userFrom.get('password')?.errors?.['pattern']"
+                >*Must include 1 uppercase, 1 spl character, 1 number.</span
+              >
+            </div>
+          </div>
+          <div class="label-input-container">
+            <label for="confirmPassword">CONFIRM PASSWORD <span>*</span></label>
+            <input
+              id="confirmPassword"
+              type="text"
+              formControlName="confirmPassword"
+              placeholder="confirm password"
+            />
+            <div class="error-div" *ngIf="submitted">
+              <span
+                *ngIf="userFrom.get('confirmPassword')?.errors?.['required']"
+                >*Confrim Password Required</span
+              >
+              <span
+                *ngIf="!userFrom.get('confirmPassword')?.errors?.['required'] &&
+      userFrom.errors?.['passwordMismatch']"
+                >* Passwords do not match</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="input-container">
-      <label for="lastName">LAST NAME <span>*</span></label>
-      <input
-        id="lastName"
-        type="text"
-        formControlName="lastName"
-        placeholder="Last Name"
-      />
-      <div
-        class="error-div"
-        *ngIf="submitted && userFrom.get('lastName')?.errors?.['required']"
-      >
-        *Last Name is Required
-      </div>
-    </div>
-    <div class="input-container">
-      <label for="mail">MAIL</label>
-      <input
-        id="mail"
-        type="text"
-        formControlName="mail"
-        placeholder="Example@mail.com"
-      />
-    </div>
-    <div class="input-container">
-      <label for="phone">PHONE NO <span>*</span></label>
-      <input id="phone" type="text" formControlName="phone" placeholder="+91" />
-      <div class="error-div" *ngIf="submitted && userFrom.get('phone')?.errors">
-        <span *ngIf="userFrom.get('phone')?.errors?.['required']"
-          >*Number Required</span
+      <hr />
+      <div formArrayName="addresses">
+        <div
+          *ngFor="let group of addresses.controls; let i = index"
+          [formGroupName]="i"
         >
-        <span *ngIf="userFrom.get('phone')?.errors?.['min']"
-          >*Number should be 10</span
-        >
+          <div class="input-container">
+            <div class="label-input-container">
+              <label for="address">STATE</label>
+              <select formControlName="state">
+                <option value="">----- Select ---------</option>
+                <option
+                  *ngFor="let option of addressOptions"
+                  [value]="option.value"
+                >
+                  {{ option.label }}
+                </option>
+              </select>
+              <div
+                class="error-div"
+                *ngIf="submitted && group.get('state')?.errors"
+              >
+                <span *ngIf="group.get('state')?.errors?.['required']"
+                  >*State Required</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-input-container">
+              <label for="zip">ZIP CODE</label>
+              <input
+                id="zip"
+                type="text"
+                placeholder="Code"
+                formContrtolName="zipCode"
+              />
+              <div
+                class="error-div"
+                *ngIf="submitted && group.get('zipCode')?.errors"
+              >
+                <span *ngIf="group.get('zipCode')?.errors?.['required']"
+                  >*Zip code Required</span
+                >
+              </div>
+            </div>
+            <div class="label-input-container">
+              <label for="city">City</label>
+              <input id="city" type="text" placeholder="city" />
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-input-container">
+              <label for="address">Address</label>
+              <textarea
+                id="address"
+                placeholder="Flat / House no. / Building name"
+                class="address-input"
+                formControlName="address"
+                rows="4"
+                cols="30"
+              ></textarea>
+              <div
+                class="error-div"
+                *ngIf="submitted && group.get('address')?.errors"
+              >
+                <span *ngIf="group.get('address')?.errors?.['required']"
+                  >*Address Required</span
+                >
+              </div>
+              <button
+                class="add-address-btn"
+                type="button"
+                (click)="addAddress()"
+              >
+                Add Address
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
